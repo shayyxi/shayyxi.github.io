@@ -35,7 +35,7 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
+      min-height: 100svh;
       font-family: "Inter", sans-serif;
       color: var(--text);
       background:
@@ -43,13 +43,61 @@
         radial-gradient(circle at bottom right, rgba(255,240,244,0.9), transparent 30%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
       padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      top: -10vh;
+      width: 14px;
+      height: 20px;
+      background: radial-gradient(circle at 30% 30%, #fff7fa 0%, #f7d7df 55%, #e8b8c4 100%);
+      border-radius: 70% 30% 70% 30%;
+      opacity: 0.8;
+      animation-name: fall, sway, spin;
+      animation-timing-function: linear, ease-in-out, linear;
+      animation-iteration-count: infinite, infinite, infinite;
+      box-shadow: 0 2px 6px rgba(143,79,89,0.12);
+    }
+
+    .petal:nth-child(odd) {
+      border-radius: 30% 70% 30% 70%;
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-12vh); }
+      to { transform: translateY(112vh); }
+    }
+
+    @keyframes sway {
+      0% { margin-left: 0; }
+      25% { margin-left: 14px; }
+      50% { margin-left: -10px; }
+      75% { margin-left: 18px; }
+      100% { margin-left: 0; }
+    }
+
+    @keyframes spin {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
     }
 
     .wrap {
       width: 100%;
       max-width: var(--maxw);
       margin: 0 auto;
-      padding-bottom: 96px;
+      padding-bottom: 140px;
+      position: relative;
+      z-index: 1;
     }
 
     .card {
@@ -59,6 +107,8 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
+      position: relative;
+      z-index: 1;
     }
 
     .hero {
@@ -187,22 +237,31 @@
       font-size: 15px;
     }
 
+    .dua {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
     .sticky-actions {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      padding: 12px 14px calc(16px + env(safe-area-inset-bottom));
       background: rgba(255,248,246,0.88);
       backdrop-filter: blur(14px);
       border-top: 1px solid rgba(183,110,121,0.16);
+      z-index: 2;
     }
 
     .actions-inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
 
     .btn {
       appearance: none;
@@ -214,15 +273,10 @@
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease;
       min-height: 52px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
     }
 
     .btn-primary {
@@ -231,169 +285,193 @@
       box-shadow: 0 10px 20px rgba(143,79,89,0.22);
     }
 
-    .btn-secondary {
-      background: white;
-      color: var(--accent-dark);
-      border: 1px solid var(--border);
-    }
-
     .footer-space {
       height: 8px;
     }
 
     @media (min-width: 700px) {
-      body {
-        padding: 28px;
-      }
-
-      .hero {
-        padding: 52px 34px 30px;
-      }
-
-      .section {
-        padding: 0 24px 20px;
-      }
-
-      .countdown {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .panel {
-        padding: 24px;
-      }
-
+      body { padding: 28px; }
+      .hero { padding: 52px 34px 30px; }
+      .section { padding: 0 24px 20px; }
+      .countdown { grid-template-columns: repeat(4, 1fr); }
+      .panel { padding: 24px; }
       .sticky-actions {
         position: static;
         padding: 0;
         background: transparent;
         backdrop-filter: none;
         border-top: 0;
-        margin-top: 4px;
       }
-
       .actions-inner {
         max-width: none;
         padding: 0 24px 24px;
       }
-
-      .btn {
-        min-height: 56px;
-      }
-
-      .wrap {
-        padding-bottom: 24px;
-      }
+      .wrap { padding-bottom: 24px; }
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <main class="card">
-      <section class="hero">
-        <div class="eyebrow">Bismillah</div>
-        <h1>Shahzaib & Mehreen</h1>
-        <p class="subtitle">
-          With gratitude to Allah, we’re counting down to our Nikkah day.
-          We look forward to celebrating this beautiful beginning with our loved ones.
-        </p>
 
-        <div class="hero-pills">
-          <div class="pill">Saturday, 21 March 2026</div>
-          <div class="pill">5:00 PM</div>
-          <div class="pill">Wah Cantt</div>
-        </div>
-      </section>
+<div class="petals" id="petals"></div>
 
-      <section class="section">
-        <div class="panel">
-          <h2 class="section-title">Countdown</h2>
+<div class="wrap">
+  <main class="card">
 
-          <div class="countdown" id="countdown">
-            <div class="time-box">
-              <span class="num" id="days">0</span>
-              <span class="label">Days</span>
-            </div>
-            <div class="time-box">
-              <span class="num" id="hours">0</span>
-              <span class="label">Hours</span>
-            </div>
-            <div class="time-box">
-              <span class="num" id="minutes">0</span>
-              <span class="label">Minutes</span>
-            </div>
-            <div class="time-box">
-              <span class="num" id="seconds">0</span>
-              <span class="label">Seconds</span>
-            </div>
-          </div>
+<section class="hero">
+<div class="eyebrow">Bismillah</div>
 
-          <div class="final-message" id="finalMessage">
-            Nikkah Mubarak 🤍
-          </div>
-        </div>
-      </section>
+<h1>Shahzaib & Mehreen</h1>
 
-      <section class="section">
-        <div class="panel">
-          <h2 class="section-title">Venue</h2>
-          <p class="venue-name">POF Guest House</p>
-          <p class="venue-text">
-            Wah Cantt
-          </p>
-        </div>
-      </section>
+<p class="subtitle">
+With gratitude to Allah, we’re counting down to our Nikkah day.
+We look forward to celebrating this beautiful beginning with our loved ones.
+</p>
 
-      <div class="sticky-actions">
-        <div class="actions-inner">
-  <a
-    class="btn btn-primary"
-    href="https://maps.app.goo.gl/57VHpx1FUArpE5NV7"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Open Map
-  </a>
+<div class="hero-pills">
+<div class="pill">Saturday, 21 March 2026</div>
+<div class="pill">5:00 PM</div>
+<div class="pill">Wah Cantt</div>
 </div>
-      </div>
+</section>
 
-      <div class="footer-space"></div>
-    </main>
-  </div>
+<section class="section">
+<div class="panel">
+<h2 class="section-title">Countdown</h2>
 
-  <script>
-    // Replace with your actual Nikkah date/time
-    const targetDate = new Date("2026-03-21T17:00:00").getTime();
+<div class="countdown" id="countdown">
 
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const countdownEl = document.getElementById("countdown");
-    const finalMessageEl = document.getElementById("finalMessage");
+<div class="time-box">
+<span class="num" id="days">0</span>
+<span class="label">Days</span>
+</div>
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
+<div class="time-box">
+<span class="num" id="hours">0</span>
+<span class="label">Hours</span>
+</div>
 
-      if (diff <= 0) {
-        countdownEl.style.display = "none";
-        finalMessageEl.style.display = "block";
-        return;
-      }
+<div class="time-box">
+<span class="num" id="minutes">0</span>
+<span class="label">Minutes</span>
+</div>
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+<div class="time-box">
+<span class="num" id="seconds">0</span>
+<span class="label">Seconds</span>
+</div>
 
-      daysEl.textContent = days;
-      hoursEl.textContent = hours;
-      minutesEl.textContent = minutes;
-      secondsEl.textContent = seconds;
-    }
+</div>
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
+<div class="final-message" id="finalMessage">
+Nikkah Mubarak 🤍
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="panel">
+<h2 class="section-title">Venue</h2>
+<p class="venue-name">POF Guest House</p>
+<p class="venue-text">Wah Cantt</p>
+</div>
+</section>
+
+<section class="section">
+<div class="panel">
+<h2 class="section-title">Dua</h2>
+<p class="dua">
+“And among His signs is that He created for you spouses from among yourselves so that you may find tranquility in them; and He placed between you affection and mercy.”
+<br><br>
+Surah Ar-Rum 30:21
+</p>
+</div>
+</section>
+
+<div class="sticky-actions">
+<div class="actions-inner">
+<a class="btn btn-primary"
+href="https://maps.app.goo.gl/57VHpx1FUArpE5NV7"
+target="_blank"
+rel="noopener noreferrer">
+Open Map
+</a>
+</div>
+</div>
+
+<div class="footer-space"></div>
+
+</main>
+</div>
+
+<script>
+
+const targetDate=new Date("2026-03-21T17:00:00").getTime()
+
+const daysEl=document.getElementById("days")
+const hoursEl=document.getElementById("hours")
+const minutesEl=document.getElementById("minutes")
+const secondsEl=document.getElementById("seconds")
+const countdownEl=document.getElementById("countdown")
+const finalMessageEl=document.getElementById("finalMessage")
+
+function updateCountdown(){
+
+const now=new Date().getTime()
+const diff=targetDate-now
+
+if(diff<=0){
+countdownEl.style.display="none"
+finalMessageEl.style.display="block"
+return
+}
+
+const days=Math.floor(diff/(1000*60*60*24))
+const hours=Math.floor((diff/(1000*60*60))%24)
+const minutes=Math.floor((diff/(1000*60))%60)
+const seconds=Math.floor((diff/1000)%60)
+
+daysEl.textContent=days
+hoursEl.textContent=hours
+minutesEl.textContent=minutes
+secondsEl.textContent=seconds
+
+}
+
+function createPetals(){
+
+const petalsContainer=document.getElementById("petals")
+const petalCount=window.innerWidth<700?14:24
+
+petalsContainer.innerHTML=""
+
+for(let i=0;i<petalCount;i++){
+
+const petal=document.createElement("span")
+petal.className="petal"
+
+const left=Math.random()*100
+const delay=Math.random()*10
+const duration=10+Math.random()*10
+
+petal.style.left=`${left}%`
+petal.style.animationDuration=`${duration}s,4s,6s`
+petal.style.animationDelay=`-${delay}s`
+
+petalsContainer.appendChild(petal)
+
+}
+
+}
+
+createPetals()
+window.addEventListener("resize",createPetals)
+
+updateCountdown()
+setInterval(updateCountdown,1000)
+
+</script>
+
 </body>
 </html>
