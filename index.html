@@ -95,7 +95,7 @@
       width: 100%;
       max-width: var(--maxw);
       margin: 0 auto;
-      padding-bottom: 140px;
+      padding-bottom: 190px;
       position: relative;
       z-index: 1;
     }
@@ -286,7 +286,7 @@
     }
 
     .footer-space {
-      height: 8px;
+      height: 32px;
     }
 
     @media (min-width: 700px) {
@@ -307,6 +307,7 @@
         padding: 0 24px 24px;
       }
       .wrap { padding-bottom: 24px; }
+      .footer-space { height: 8px; }
     }
   </style>
 </head>
@@ -406,7 +407,6 @@ Open Map
 </div>
 
 <script>
-
 const targetDate=new Date("2026-03-21T17:00:00").getTime()
 
 const daysEl=document.getElementById("days")
@@ -417,52 +417,46 @@ const countdownEl=document.getElementById("countdown")
 const finalMessageEl=document.getElementById("finalMessage")
 
 function updateCountdown(){
+  const now=new Date().getTime()
+  const diff=targetDate-now
 
-const now=new Date().getTime()
-const diff=targetDate-now
+  if(diff<=0){
+    countdownEl.style.display="none"
+    finalMessageEl.style.display="block"
+    return
+  }
 
-if(diff<=0){
-countdownEl.style.display="none"
-finalMessageEl.style.display="block"
-return
-}
+  const days=Math.floor(diff/(1000*60*60*24))
+  const hours=Math.floor((diff/(1000*60*60))%24)
+  const minutes=Math.floor((diff/(1000*60))%60)
+  const seconds=Math.floor((diff/1000)%60)
 
-const days=Math.floor(diff/(1000*60*60*24))
-const hours=Math.floor((diff/(1000*60*60))%24)
-const minutes=Math.floor((diff/(1000*60))%60)
-const seconds=Math.floor((diff/1000)%60)
-
-daysEl.textContent=days
-hoursEl.textContent=hours
-minutesEl.textContent=minutes
-secondsEl.textContent=seconds
-
+  daysEl.textContent=days
+  hoursEl.textContent=hours
+  minutesEl.textContent=minutes
+  secondsEl.textContent=seconds
 }
 
 function createPetals(){
+  const petalsContainer=document.getElementById("petals")
+  const petalCount=window.innerWidth<700?14:24
 
-const petalsContainer=document.getElementById("petals")
-const petalCount=window.innerWidth<700?14:24
+  petalsContainer.innerHTML=""
 
-petalsContainer.innerHTML=""
+  for(let i=0;i<petalCount;i++){
+    const petal=document.createElement("span")
+    petal.className="petal"
 
-for(let i=0;i<petalCount;i++){
+    const left=Math.random()*100
+    const delay=Math.random()*10
+    const duration=10+Math.random()*10
 
-const petal=document.createElement("span")
-petal.className="petal"
+    petal.style.left=`${left}%`
+    petal.style.animationDuration=`${duration}s,4s,6s`
+    petal.style.animationDelay=`-${delay}s`
 
-const left=Math.random()*100
-const delay=Math.random()*10
-const duration=10+Math.random()*10
-
-petal.style.left=`${left}%`
-petal.style.animationDuration=`${duration}s,4s,6s`
-petal.style.animationDelay=`-${delay}s`
-
-petalsContainer.appendChild(petal)
-
-}
-
+    petalsContainer.appendChild(petal)
+  }
 }
 
 createPetals()
@@ -470,7 +464,6 @@ window.addEventListener("resize",createPetals)
 
 updateCountdown()
 setInterval(updateCountdown,1000)
-
 </script>
 
 </body>
