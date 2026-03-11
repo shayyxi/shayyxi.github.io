@@ -1,325 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nikkah Countdown</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --bg1: #fff8f6;
-      --bg2: #f6ece8;
-      --card: rgba(255, 255, 255, 0.78);
-      --text: #3d2f2b;
-      --muted: #7a6661;
-      --accent: #b76e79;
-      --accent-dark: #8f4f59;
-      --accent-soft: #f3d9de;
-      --border: rgba(183,110,121,0.18);
-      --shadow: 0 18px 50px rgba(96,56,64,0.14);
-      --radius: 24px;
-      --radius-sm: 18px;
-      --maxw: 760px;
-    }
+<title>Shahzaib & Mehreen — Nikkah Countdown</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    html {
-      scroll-behavior: smooth;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      min-height: 100svh;
-      font-family: "Inter", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(255,240,244,0.9), transparent 30%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      padding: 16px;
-      overflow-x: hidden;
-      position: relative;
-    }
+<style>
 
-    .petals {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .petal {
-      position: absolute;
-      top: -10vh;
-      width: 14px;
-      height: 20px;
-      background: radial-gradient(circle at 30% 30%, #fff7fa 0%, #f7d7df 55%, #e8b8c4 100%);
-      border-radius: 70% 30% 70% 30%;
-      opacity: 0.8;
-      animation-name: fall, sway, spin;
-      animation-timing-function: linear, ease-in-out, linear;
-      animation-iteration-count: infinite, infinite, infinite;
-      box-shadow: 0 2px 6px rgba(143,79,89,0.12);
-    }
-
-    .petal:nth-child(odd) {
-      border-radius: 30% 70% 30% 70%;
-    }
-
-    @keyframes fall {
-      from { transform: translateY(-12vh); }
-      to { transform: translateY(112vh); }
-    }
-
-    @keyframes sway {
-      0% { margin-left: 0; }
-      25% { margin-left: 14px; }
-      50% { margin-left: -10px; }
-      75% { margin-left: 18px; }
-      100% { margin-left: 0; }
-    }
-
-    @keyframes spin {
-      from { rotate: 0deg; }
-      to { rotate: 360deg; }
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding-bottom: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .card {
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-    }
-
-    .music-btn{
-  margin-top:16px;
-  border:none;
-  background:var(--accent-dark);
-  color:white;
-  padding:10px 16px;
-  border-radius:20px;
-  font-size:14px;
-  cursor:pointer;
+:root{
+--bg1:#fff8f6;
+--bg2:#f6ece8;
+--card:rgba(255,255,255,0.82);
+--text:#3d2f2b;
+--muted:#7a6661;
+--accent:#b76e79;
+--accent-dark:#8f4f59;
+--border:rgba(183,110,121,0.18);
+--shadow:0 18px 50px rgba(96,56,64,0.14);
+--radius:24px;
+--radius-sm:18px;
+--maxw:760px;
 }
 
-    .hero {
-      padding: 34px 20px 24px;
-      text-align: center;
-      position: relative;
-    }
+*{box-sizing:border-box}
 
-    .eyebrow {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
+body{
+margin:0;
+min-height:100svh;
+font-family:"Inter",sans-serif;
+color:var(--text);
 
-    h1 {
-      margin: 0;
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(40px, 10vw, 66px);
-      line-height: 0.95;
-      font-weight: 700;
-    }
+background:
+radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 28%),
+radial-gradient(circle at bottom right, rgba(255,240,244,0.9), transparent 30%),
+linear-gradient(135deg,var(--bg1),var(--bg2));
 
-    .subtitle {
-      margin: 14px auto 0;
-      max-width: 560px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.75;
-    }
+padding:16px;
+overflow-x:hidden;
+}
 
-    .hero-pills {
-      margin-top: 22px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
+.wrap{
+width:100%;
+max-width:var(--maxw);
+margin:0 auto;
+padding-bottom:24px;
+position:relative;
+z-index:1;
+}
 
-    .pill {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.75);
-      color: var(--accent-dark);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-    }
+.card{
+background:var(--card);
+backdrop-filter:blur(12px);
+border:1px solid var(--border);
+border-radius:var(--radius);
+box-shadow:var(--shadow);
+overflow:hidden;
+}
 
-    .section {
-      padding: 0 16px 16px;
-    }
+.hero{
+padding:36px 22px 24px;
+text-align:center;
+}
 
-    .panel {
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 8px 24px rgba(96,56,64,0.06);
-    }
+.eyebrow{
+font-size:11px;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--accent-dark);
+font-weight:700;
+margin-bottom:12px;
+}
 
-    .section-title {
-      margin: 0 0 12px;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
-      font-weight: 700;
-    }
+h1{
+margin:0;
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(42px,10vw,64px);
+line-height:.95;
+}
 
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
+.subtitle{
+margin:14px auto 0;
+max-width:560px;
+color:var(--muted);
+font-size:15px;
+line-height:1.7;
+}
 
-    .time-box {
-      text-align: center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,248,248,0.95));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 18px 10px;
-    }
+.hero-pills{
+margin-top:20px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+}
 
-    .num {
-      display: block;
-      font-size: clamp(30px, 9vw, 44px);
-      line-height: 1;
-      font-weight: 700;
-      color: var(--accent-dark);
-      margin-bottom: 8px;
-    }
+.pill{
+border:1px solid var(--border);
+background:white;
+color:var(--accent-dark);
+padding:10px 14px;
+border-radius:999px;
+font-size:13px;
+font-weight:600;
+}
 
-    .label {
-      display: block;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      font-weight: 700;
-    }
+.music-btn{
+margin-top:18px;
+border:none;
+background:var(--accent-dark);
+color:white;
+padding:10px 18px;
+border-radius:22px;
+font-size:14px;
+cursor:pointer;
+}
 
-    .final-message {
-      display: none;
-      text-align: center;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent-dark);
-      padding: 10px 4px 4px;
-    }
+.section{
+padding:0 18px 18px;
+}
 
-    .venue-name {
-      font-size: 20px;
-      font-weight: 700;
-      margin: 0 0 8px;
-      color: var(--text);
-    }
+.panel{
+background:white;
+border:1px solid var(--border);
+border-radius:22px;
+padding:20px;
+box-shadow:0 8px 24px rgba(96,56,64,0.06);
+}
 
-    .venue-text {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 15px;
-    }
+.section-title{
+margin:0 0 12px;
+font-size:14px;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--accent-dark);
+font-weight:700;
+}
 
-    .dua {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-      margin: 0;
-    }
+.countdown{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
 
-    .sticky-actions {
-      position: static;
-      padding: 0 16px 16px;
-      background: transparent;
-      backdrop-filter: none;
-      border-top: 0;
-      z-index: 2;
-    }
+.time-box{
+text-align:center;
+background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,248,248,0.95));
+border:1px solid var(--border);
+border-radius:var(--radius-sm);
+padding:20px 10px;
+}
 
-    .actions-inner {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
+.num{
+display:block;
+font-size:clamp(32px,9vw,44px);
+font-weight:700;
+color:var(--accent-dark);
+margin-bottom:6px;
+}
 
-    .btn {
-      appearance: none;
-      border: none;
-      border-radius: 16px;
-      padding: 15px 16px;
-      font-size: 15px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      min-height: 52px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+.label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.12em;
+color:var(--muted);
+font-weight:700;
+}
 
-    .btn-primary {
-      background: var(--accent-dark);
-      color: white;
-      box-shadow: 0 10px 20px rgba(143,79,89,0.22);
-    }
+.venue-name{
+font-size:20px;
+font-weight:700;
+margin-bottom:6px;
+}
 
-    .footer-space {
-      height: 8px;
-    }
+.venue-text{
+color:var(--muted);
+line-height:1.7;
+}
 
-    @media (min-width: 700px) {
-      body { padding: 28px; }
-      .hero { padding: 52px 34px 30px; }
-      .section { padding: 0 24px 20px; }
-      .countdown { grid-template-columns: repeat(4, 1fr); }
-      .panel { padding: 24px; }
+.dua{
+text-align:center;
+color:var(--muted);
+font-size:14px;
+line-height:1.8;
+}
 
-      .sticky-actions {
-        position: static;
-        padding: 0;
-        background: transparent;
-        backdrop-filter: none;
-        border-top: 0;
-      }
+.actions{
+padding:18px;
+}
 
-      .actions-inner {
-        max-width: none;
-        padding: 0 24px 24px;
-      }
+.btn{
+width:100%;
+border:none;
+border-radius:16px;
+padding:16px;
+font-size:16px;
+font-weight:700;
+background:var(--accent-dark);
+color:white;
+text-decoration:none;
+display:inline-block;
+text-align:center;
+box-shadow:0 10px 20px rgba(143,79,89,0.22);
+}
 
-      .wrap { padding-bottom: 24px; }
-    }
-  </style>
+.btn:active{transform:scale(.98)}
+
+@media(min-width:700px){
+
+.hero{padding:56px 34px 30px}
+
+.section{padding:0 24px 20px}
+
+.countdown{grid-template-columns:repeat(4,1fr)}
+
+.panel{padding:26px}
+
+.actions{padding:24px}
+
+}
+
+/* PETALS */
+
+.petals{
+position:fixed;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+z-index:0;
+}
+
+.petal{
+position:absolute;
+top:-10vh;
+width:14px;
+height:20px;
+background:radial-gradient(circle at 30% 30%, #fff7fa 0%, #f7d7df 55%, #e8b8c4 100%);
+border-radius:70% 30% 70% 30%;
+opacity:.8;
+animation-name:fall,sway,spin;
+animation-timing-function:linear,ease-in-out,linear;
+animation-iteration-count:infinite;
+}
+
+@keyframes fall{
+from{transform:translateY(-12vh)}
+to{transform:translateY(112vh)}
+}
+
+@keyframes sway{
+0%{margin-left:0}
+25%{margin-left:14px}
+50%{margin-left:-10px}
+75%{margin-left:18px}
+100%{margin-left:0}
+}
+
+@keyframes spin{
+from{rotate:0deg}
+to{rotate:360deg}
+}
+
+</style>
 </head>
 
 <body>
@@ -327,13 +274,18 @@
 <div class="petals" id="petals"></div>
 
 <div class="wrap">
-  <main class="card">
+
+<main class="card">
 
 <section class="hero">
+
 <div class="eyebrow">Bismillah</div>
 
 <h1>Shahzaib & Mehreen</h1>
-<button id="musicBtn" class="music-btn">🔊 Play Audio</button>
+
+<button id="musicBtn" class="music-btn">
+🔊 Play Vibes
+</button>
 
 <p class="subtitle">
 With gratitude to Allah, we’re counting down to our Nikkah day.
@@ -345,10 +297,13 @@ We look forward to celebrating this beautiful beginning with our loved ones.
 <div class="pill">5:00 PM</div>
 <div class="pill">Wah Cantt</div>
 </div>
+
 </section>
 
 <section class="section">
+
 <div class="panel">
+
 <h2 class="section-title">Countdown</h2>
 
 <div class="countdown" id="countdown">
@@ -375,126 +330,140 @@ We look forward to celebrating this beautiful beginning with our loved ones.
 
 </div>
 
-<div class="final-message" id="finalMessage">
-Nikkah Mubarak 🤍
 </div>
 
-</div>
 </section>
 
 <section class="section">
+
 <div class="panel">
+
 <h2 class="section-title">Venue</h2>
+
 <p class="venue-name">POF Guest House</p>
-<p class="venue-text">Wah Cantt</p>
+
+<p class="venue-text">
+Wah Cantt
+</p>
+
 </div>
+
 </section>
 
 <section class="section">
+
 <div class="panel">
+
 <h2 class="section-title">Dua</h2>
+
 <p class="dua">
-“And among His signs is that He created for you spouses from among yourselves so that you may find tranquility in them; and He placed between you affection and mercy.”
+“And among His signs is that He created for you spouses from among yourselves
+so that you may find tranquility in them; and He placed between you affection
+and mercy.”
 <br><br>
 Surah Ar-Rum 30:21
 </p>
+
 </div>
+
 </section>
 
-<div class="sticky-actions">
-<div class="actions-inner">
-<a class="btn btn-primary"
-href="https://maps.app.goo.gl/57VHpx1FUArpE5NV7"
-target="_blank"
-rel="noopener noreferrer">
-Open Map
-</a>
-</div>
-</div>
+<div class="actions">
 
-<div class="footer-space"></div>
+<a class="btn"
+href="https://maps.app.goo.gl/57VHpx1FUArpE5NV7"
+target="_blank">
+
+Open Venue Location
+
+</a>
+
+</div>
 
 </main>
+
 </div>
 
+<audio id="bg-audio" loop>
+<source src="file.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+
 const targetDate=new Date("2026-03-21T17:00:00").getTime()
 
 const daysEl=document.getElementById("days")
 const hoursEl=document.getElementById("hours")
 const minutesEl=document.getElementById("minutes")
 const secondsEl=document.getElementById("seconds")
-const countdownEl=document.getElementById("countdown")
-const finalMessageEl=document.getElementById("finalMessage")
-
-const musicBtn = document.getElementById("musicBtn");
-const audio = document.getElementById("bg-audio");
-
-musicBtn.addEventListener("click", () => {
-
-  if(audio.paused){
-    audio.play();
-    musicBtn.textContent = "🔇 Pause Audio";
-  }else{
-    audio.pause();
-    musicBtn.textContent = "🔊 Play Audio";
-  }
-
-});
 
 function updateCountdown(){
-  const now=new Date().getTime()
-  const diff=targetDate-now
 
-  if(diff<=0){
-    countdownEl.style.display="none"
-    finalMessageEl.style.display="block"
-    return
-  }
+const now=new Date().getTime()
+const diff=targetDate-now
 
-  const days=Math.floor(diff/(1000*60*60*24))
-  const hours=Math.floor((diff/(1000*60*60))%24)
-  const minutes=Math.floor((diff/(1000*60))%60)
-  const seconds=Math.floor((diff/1000)%60)
+const days=Math.floor(diff/(1000*60*60*24))
+const hours=Math.floor((diff/(1000*60*60))%24)
+const minutes=Math.floor((diff/(1000*60))%60)
+const seconds=Math.floor((diff/1000)%60)
 
-  daysEl.textContent=days
-  hoursEl.textContent=hours
-  minutesEl.textContent=minutes
-  secondsEl.textContent=seconds
+daysEl.textContent=days
+hoursEl.textContent=hours
+minutesEl.textContent=minutes
+secondsEl.textContent=seconds
+
 }
 
+setInterval(updateCountdown,1000)
+updateCountdown()
+
 function createPetals(){
-  const petalsContainer=document.getElementById("petals")
-  const petalCount=window.innerWidth<700?14:24
 
-  petalsContainer.innerHTML=""
+const petalsContainer=document.getElementById("petals")
+const petalCount=window.innerWidth<700?14:24
 
-  for(let i=0;i<petalCount;i++){
-    const petal=document.createElement("span")
-    petal.className="petal"
+petalsContainer.innerHTML=""
 
-    const left=Math.random()*100
-    const delay=Math.random()*10
-    const duration=10+Math.random()*10
+for(let i=0;i<petalCount;i++){
 
-    petal.style.left=`${left}%`
-    petal.style.animationDuration=`${duration}s,4s,6s`
-    petal.style.animationDelay=`-${delay}s`
+const petal=document.createElement("span")
+petal.className="petal"
 
-    petalsContainer.appendChild(petal)
-  }
+const left=Math.random()*100
+const delay=Math.random()*10
+const duration=10+Math.random()*10
+
+petal.style.left=`${left}%`
+petal.style.animationDuration=`${duration}s,4s,6s`
+petal.style.animationDelay=`-${delay}s`
+
+petalsContainer.appendChild(petal)
+
+}
+
 }
 
 createPetals()
 window.addEventListener("resize",createPetals)
 
-updateCountdown()
-setInterval(updateCountdown,1000)
-</script>
+/* AUDIO */
 
-<audio id="bg-audio" loop>
-  <source src="file.mp3" type="audio/mpeg">
-</audio>
+const musicBtn=document.getElementById("musicBtn")
+const audio=document.getElementById("bg-audio")
+
+musicBtn.addEventListener("click",()=>{
+
+if(audio.paused){
+audio.play()
+musicBtn.textContent="🔇 Pause Vibes"
+}else{
+audio.pause()
+musicBtn.textContent="🔊 Play Vibes"
+}
+
+})
+
+</script>
 
 </body>
 </html>
