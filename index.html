@@ -111,6 +111,17 @@
       z-index: 1;
     }
 
+    .music-btn{
+  margin-top:16px;
+  border:none;
+  background:var(--accent-dark);
+  color:white;
+  padding:10px 16px;
+  border-radius:20px;
+  font-size:14px;
+  cursor:pointer;
+}
+
     .hero {
       padding: 34px 20px 24px;
       text-align: center;
@@ -322,6 +333,7 @@
 <div class="eyebrow">Bismillah</div>
 
 <h1>Shahzaib & Mehreen</h1>
+<button id="musicBtn" class="music-btn">🔊 Play Audio</button>
 
 <p class="subtitle">
 With gratitude to Allah, we’re counting down to our Nikkah day.
@@ -415,6 +427,21 @@ const secondsEl=document.getElementById("seconds")
 const countdownEl=document.getElementById("countdown")
 const finalMessageEl=document.getElementById("finalMessage")
 
+const musicBtn = document.getElementById("musicBtn");
+const audio = document.getElementById("bg-audio");
+
+musicBtn.addEventListener("click", () => {
+
+  if(audio.paused){
+    audio.play();
+    musicBtn.textContent = "🔇 Pause Audio";
+  }else{
+    audio.pause();
+    musicBtn.textContent = "🔊 Play Audio";
+  }
+
+});
+
 function updateCountdown(){
   const now=new Date().getTime()
   const diff=targetDate-now
@@ -464,6 +491,10 @@ window.addEventListener("resize",createPetals)
 updateCountdown()
 setInterval(updateCountdown,1000)
 </script>
+
+<audio id="bg-audio" loop>
+  <source src="file.mp3" type="audio/mpeg">
+</audio>
 
 </body>
 </html>
