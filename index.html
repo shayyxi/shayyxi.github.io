@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nikkah Countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg1: #fff8f6;
+      --bg2: #f6ece8;
+      --card: rgba(255, 255, 255, 0.78);
+      --text: #3d2f2b;
+      --muted: #7a6661;
+      --accent: #b76e79;
+      --accent-dark: #8f4f59;
+      --accent-soft: #f3d9de;
+      --border: rgba(183,110,121,0.18);
+      --shadow: 0 18px 50px rgba(96,56,64,0.14);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --maxw: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255,240,244,0.9), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      padding: 16px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-bottom: 96px;
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: 34px 20px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(40px, 10vw, 66px);
+      line-height: 0.95;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 14px auto 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .hero-pills {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.75);
+      color: var(--accent-dark);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 0 16px 16px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(96,56,64,0.06);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .time-box {
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,248,248,0.95));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 10px;
+    }
+
+    .num {
+      display: block;
+      font-size: clamp(30px, 9vw, 44px);
+      line-height: 1;
+      font-weight: 700;
+      color: var(--accent-dark);
+      margin-bottom: 8px;
+    }
+
+    .label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .final-message {
+      display: none;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      padding: 10px 4px 4px;
+    }
+
+    .venue-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .venue-text {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .dua {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .sticky-actions {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(255,248,246,0.88);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(183,110,121,0.16);
+    }
+
+    .actions-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent-dark);
+      color: white;
+      box-shadow: 0 10px 20px rgba(143,79,89,0.22);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--accent-dark);
+      border: 1px solid var(--border);
+    }
+
+    .footer-space {
+      height: 8px;
+    }
+
+    @media (min-width: 700px) {
+      body {
+        padding: 28px;
+      }
+
+      .hero {
+        padding: 52px 34px 30px;
+      }
+
+      .section {
+        padding: 0 24px 20px;
+      }
+
+      .countdown {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .sticky-actions {
+        position: static;
+        padding: 0;
+        background: transparent;
+        backdrop-filter: none;
+        border-top: 0;
+        margin-top: 4px;
+      }
+
+      .actions-inner {
+        max-width: none;
+        padding: 0 24px 24px;
+      }
+
+      .btn {
+        min-height: 56px;
+      }
+
+      .wrap {
+        padding-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card">
+      <section class="hero">
+        <div class="eyebrow">Bismillah</div>
+        <h1>Shahzaib & Mehreen</h1>
+        <p class="subtitle">
+          With gratitude to Allah, we’re counting down to our Nikkah day.
+          We look forward to celebrating this beautiful beginning with our loved ones.
+        </p>
+
+        <div class="hero-pills">
+          <div class="pill">Saturday, 21 March 2026</div>
+          <div class="pill">5:00 PM</div>
+          <div class="pill">Wah Cantt</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2 class="section-title">Countdown</h2>
+
+          <div class="countdown" id="countdown">
+            <div class="time-box">
+              <span class="num" id="days">0</span>
+              <span class="label">Days</span>
+            </div>
+            <div class="time-box">
+              <span class="num" id="hours">0</span>
+              <span class="label">Hours</span>
+            </div>
+            <div class="time-box">
+              <span class="num" id="minutes">0</span>
+              <span class="label">Minutes</span>
+            </div>
+            <div class="time-box">
+              <span class="num" id="seconds">0</span>
+              <span class="label">Seconds</span>
+            </div>
+          </div>
+
+          <div class="final-message" id="finalMessage">
+            Nikkah Mubarak 🤍
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2 class="section-title">Venue</h2>
+          <p class="venue-name">POF Guest House</p>
+          <p class="venue-text">
+            Wah Cantt
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2 class="section-title">Dua</h2>
+          <p class="dua">
+            “And among His signs is that He created for you spouses from among yourselves
+            so that you may find tranquility in them; and He placed between you affection and mercy.”
+            <br><br>
+            Surah Ar-Rum 30:21
+          </p>
+        </div>
+      </section>
+
+      <div class="sticky-actions">
+        <div class="actions-inner">
+  <a
+    class="btn btn-primary"
+    href="https://www.google.com/maps/search/?api=1&query=Pearl+Continental+Hotel+Lahore"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Open Map
+  </a>
+</div>
+      </div>
+
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    // Replace with your actual Nikkah date/time
+    const targetDate = new Date("2026-03-21T17:00:00").getTime();
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const countdownEl = document.getElementById("countdown");
+    const finalMessageEl = document.getElementById("finalMessage");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdownEl.style.display = "none";
+        finalMessageEl.style.display = "block";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = days;
+      hoursEl.textContent = hours;
+      minutesEl.textContent = minutes;
+      secondsEl.textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
